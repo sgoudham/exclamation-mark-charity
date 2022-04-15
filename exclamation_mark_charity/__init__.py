@@ -20,6 +20,8 @@ DB_FILE.parent.mkdir(parents=True, exist_ok=True)
 LOG_FILE = Path("logs", "discord.log")
 LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 
+TWITCH_CHANNEL = "https://www.twitch.tv/exclamation_mark_charity"
+
 # Set Up Logging
 LOGGER = logging.getLogger("discord")
 LOGGER.setLevel(logging.DEBUG)
