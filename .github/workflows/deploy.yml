@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Restart !charity Bot via SSH
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd exclamation-mark-charity/
+            sudo systemctl stop exclamation-mark-charity.service
+            bash backup.sh
+            git pull
+            sudo systemctl start exclamation-mark-charity.service
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
