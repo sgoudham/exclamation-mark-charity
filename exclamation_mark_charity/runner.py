@@ -1,10 +1,15 @@
-from discord import Intents
-from discord.ext import commands
-from discord.ext.commands import Context
+from discord import Intents, Streaming
+from discord.ext.commands import Context, Bot
 
-from exclamation_mark_charity import BOT_PREFIX, BOT_TOKEN
+from exclamation_mark_charity import BOT_PREFIX, BOT_TOKEN, HAMMY, NUGGS, LUCA, TWITCH_CHANNEL
 
-bot = commands.Bot(command_prefix=BOT_PREFIX, intents=Intents.all())
+bot = Bot(
+    command_prefix=BOT_PREFIX,
+    intents=Intents.all(),
+    help_command=None,
+    owner_ids=(HAMMY, NUGGS, LUCA)
+)
+bot.activity = Streaming(name="!charity", url=TWITCH_CHANNEL)
 
 
 @bot.command()
