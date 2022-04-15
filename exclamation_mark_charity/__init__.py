@@ -7,6 +7,11 @@ from dotenv import load_dotenv
 # Setup
 load_dotenv()
 
+# Owner IDs
+HAMMY = 154840866496839680
+NUGGS = 337175192751308801
+LUCA = 216625083186151425
+
 # Constants
 BOT_TOKEN = os.environ.get("CHARITY_BOT_TOKEN")
 BOT_PREFIX = "!"
