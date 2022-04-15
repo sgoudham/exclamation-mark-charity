@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Constants
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
+BOT_TOKEN = os.environ.get("CHARITY_BOT_TOKEN")
 BOT_PREFIX = "!"
 
 # Set Up Logging
