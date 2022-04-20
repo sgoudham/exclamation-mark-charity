@@ -15,7 +15,6 @@ class Charity(Extension):
     async def on_message_create(self, message: Message):
         if int(message.author.id) != int(self.bot.me.id):
             if message.content.strip() == "!charity":
-                message._client = self.bot.http
                 channel = await message.get_channel()
                 await channel.send("!charity")
                 self.logger.info("!charity command fired!")
