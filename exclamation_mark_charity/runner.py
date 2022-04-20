@@ -1,21 +1,51 @@
-from discord import Intents, Streaming
-from discord.ext.commands import Context, Bot
+import os
+from pathlib import Path
 
-from exclamation_mark_charity import BOT_PREFIX, BOT_TOKEN, HAMMY, NUGGS, LUCA, TWITCH_CHANNEL
+from dotenv import load_dotenv
+from interactions import Client, Intents, ClientPresence, PresenceActivity, PresenceActivityType
 
-bot = Bot(
-    command_prefix=BOT_PREFIX,
-    intents=Intents.all(),
-    help_command=None,
-    owner_ids=(HAMMY, NUGGS, LUCA)
-)
-bot.activity = Streaming(name="!charity", url=TWITCH_CHANNEL)
+from exclamation_mark_charity.constants import TWITCH_CHANNEL
+from exclamation_mark_charity.logger_factory import LoggerFactory
 
 
-@bot.command()
-async def charity(ctx: Context):
-    await ctx.send("!charity")
+def main():
+    logger = LoggerFactory.get_logger(__name__)
+
+    # Setup dotenv()
+    logger.info("---------------------------------------------------------------")
+    logger.debug("Loading Environment Variables...")
+    load_dotenv()
+    logger.debug("Finished Loading Environment Variables!")
+
+    # Setup Bot
+    logger.debug("Registering Client...")
+    bot = Client(
+        token=os.environ.get("CHARITY_BOT_TOKEN"),
+        intents=Intents.ALL,
+        presence=ClientPresence(
+            activities=[
+                PresenceActivity(
+                    name="!charity",
+                    type=PresenceActivityType.STREAMING,
+                    url=TWITCH_CHANNEL
+                )
+            ]
+        )
+    )
+    logger.debug("Finished Registering Client!")
+
+    # Load cogs
+    logger.debug("Loading Cogs...")
+    for folder in os.listdir("modules"):
+        if os.path.exists(Path("modules", folder, "cog.py")):
+            bot.load(f"modules.{folder}.cog")
+            logger.debug(f"Cog '{folder}' Successfully Loaded!")
+    logger.debug("All Cogs Loaded!")
+
+    # Run
+    logger.info("Bot Online!")
+    bot.start()
 
 
 if __name__ == '__main__':
-    bot.run(BOT_TOKEN)
+    main()
