@@ -38,7 +38,7 @@ def main():
     logger.debug("Loading Cogs...")
     for folder in os.listdir("exclamation_mark_charity/modules"):
         if os.path.exists(Path("exclamation_mark_charity/modules", folder, "cog.py")):
-            bot.load(f"exclamation_mark_charity/modules.{folder}.cog")
+            bot.load(f"modules.{folder}.cog")
             logger.debug(f"Cog '{folder}' Successfully Loaded!")
     logger.debug("All Cogs Loaded!")
 
