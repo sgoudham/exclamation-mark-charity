@@ -73,7 +73,7 @@ class Tournament(interactions.Extension):
         if sub_command == "create":
             row = interactions.ActionRow(
                 components=[
-                    create_button(interactions.ButtonStyle.PRIMARY, "Yes", "success"),
+                    create_button(interactions.ButtonStyle.SUCCESS, "Yes", "success"),
                     create_button(interactions.ButtonStyle.DANGER, "Cancel", "cancel")
                 ]
             )
