@@ -1,8 +1,10 @@
 import os
 from pathlib import Path
 
+import interactions
 from dotenv import load_dotenv
 from interactions import Client, Intents, ClientPresence, PresenceActivity, PresenceActivityType
+from interactions.ext import wait_for
 
 from exclamation_mark_charity.constants import TWITCH_CHANNEL
 from exclamation_mark_charity.logger_factory import LoggerFactory
@@ -29,10 +31,15 @@ def main():
                     type=PresenceActivityType.STREAMING,
                     url=TWITCH_CHANNEL
                 )
-            ]
+            ],
+            status=interactions.StatusType.ONLINE
         )
     )
     logger.debug("Finished Registering Client!")
+
+    # Apply hooks to the class - wait_for(), wait_for_component()
+    # setup(bot, add_method=True)
+    wait_for.setup(bot, add_method=True)
 
     # Load cogs
     logger.debug("Loading Cogs...")
