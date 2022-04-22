@@ -117,6 +117,10 @@ class Tournament(interactions.Extension):
             success, all_tournaments = Database.view_all_tournaments()
             tables = [table[0] for table in all_tournaments[1:]]
 
+            if not tables:
+                await ctx.send("No Tables To Delete!")
+                return
+
             menu = interactions.SelectMenu(
                 custom_id="tournament_deletes_menu",
                 options=[interactions.SelectOption(label=table, value=table) for table in tables],
