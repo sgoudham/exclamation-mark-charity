@@ -44,5 +44,38 @@ class Database:
 
         return True, tournament_id
 
+    @staticmethod
+    def view_all_tournaments() -> (bool, list):
+        sql = '''SELECT * FROM Tournament'''
+        results = []
+
+        try:
+            with closing(Database.__connect()) as conn:
+                with conn:
+                    with closing(conn.cursor()) as cur:
+                        cursor = cur.execute(sql)
+                        results.append([desc[0] for desc in cursor.description[1:]])
+                        for row in cursor:
+                            results.append(row[1:])
+        except sqlite3.Error as err:
+            logger.error(err)
+            return False, results
+
+        return True, results
+
+    @staticmethod
+    def delete_many_tournaments(tables: []) -> bool:
+        sql = '''DELETE FROM Tournament WHERE name = (?)'''
+
+        try:
+            with closing(Database.__connect()) as conn:
+                with conn:
+                    conn.executemany(sql, tables)
+        except sqlite3.Error as err:
+            logger.error(err)
+            return False
+
+        return True
+
     def insert(self):
         pass
