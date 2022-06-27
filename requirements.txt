@@ -1,4 +1,4 @@
 ﻿git+https://github.com/interactions-py/library.git@4.1.1-rc.1
 interactions-wait-for==1.0.4
 python-dotenv==0.20.0
-table2ascii==0.2.0
+table2ascii==0.3.0
